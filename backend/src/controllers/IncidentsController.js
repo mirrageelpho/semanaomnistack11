@@ -9,9 +9,10 @@ module.exports = {
 
     const incidents = await connection("incidents")
     .join('ongs', 'ong_id', '=', 'incidents.ong_id')
-    .limit(5)
+    .limit(1)
     .offset((page - 1) * 5)
-    .select(["incidents.*","ongs.name", "ongs.email", "ongs.city", "ongs.uf" ,"ongs.whatsapp"]);
+    .select(["incidents.*","ongs.name", "ongs.email", "ongs.city", "ongs.uf" ,"ongs.whatsapp"])
+
 
     res.header('X-Total-Count', count['count(*)'])//retornando o total no cabeçalho da requisição
     
