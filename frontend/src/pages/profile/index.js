@@ -20,7 +20,7 @@ export default function Profile() {
 
   React.useEffect(() => {
     api
-      .get("profile_case", {
+      .get("profile", {
         headers: {
           Authorization: ongId
         }
