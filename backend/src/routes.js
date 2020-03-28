@@ -1,25 +1,29 @@
 const express = require("express");
-const crypto = require("crypto");
-const connection = require("./database/connection");
 //controllers
 const OngController = require('./controllers/OngController');
 const IncidentsController = require('./controllers/IncidentsController');
 const ProfileController = require('./controllers/ProfileController');
 const SessionController = require('./controllers/SessionController');
+//validations
+const ongsValidations = require('./validations/ongs.validations')
+const profileValidations = require('./validations/profile.validations')
+const incidentsValidations = require('./validations/incidents.validations')
 //routes
 const Routes = express.Router();
 
+//Session
 Routes.post('/session', SessionController.create)
 
 //Ongs Routes
 Routes.get('/ongs', OngController.index);
-Routes.post("/ongs", OngController.create);
-
-//Incidents Routes
-Routes.get("/incidents", IncidentsController.index);
-Routes.post("/incidents", IncidentsController.create);
-Routes.delete("/incidents/:id", IncidentsController.delete);
+Routes.post("/ongs", ongsValidations._BODY, OngController.create);
 
 //Profile incidents Routes
-Routes.get('/profile_case', ProfileController.index);
+Routes.get('/profile', profileValidations._HEADERS, ProfileController.index);
+
+//Incidents Routes
+Routes.get("/incidents", incidentsValidations._QUERY, IncidentsController.index);
+Routes.post("/incidents", IncidentsController.create);
+Routes.delete("/incidents/:id", incidentsValidations._PARAMS, IncidentsController.delete);
+
 module.exports = Routes;
